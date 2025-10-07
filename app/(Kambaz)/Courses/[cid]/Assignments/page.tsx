@@ -1,33 +1,126 @@
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
 import Link from "next/link";
+import { Button } from "react-bootstrap";
+import { FaPlus, FaEllipsisV } from "react-icons/fa";
+import LessonControlButtons from "./LessonControlButtons";
+
 export default function Assignments() {
-    return (
-      <div id="wd-assignments">
-        <input placeholder="Search for Assignments"
-               id="wd-search-assignment" />
-        <button id="wd-add-assignment-group">+ Group</button>
-        <button id="wd-add-assignment">+ Assignment</button>
-        <h3 id="wd-assignments-title">
-          ASSIGNMENTS 40% of Total <button>+</button> </h3>
-        <ul id="wd-assignment-list">
-          <li className="wd-assignment-list-item">
-            <Link href="/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A1 - ENV + HTML
-            </Link> </li>
-            <p>Multiple Modules|Not available until May 6 at 12am|Due May 15 at 11:59pm|100pts</p>
-          <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A2 - CSS + BOOTSTRAP
-            </Link> </li>
-            <p>Multiple Modules|Not available until May 13 at 12am|Due May 20 at 11:59pm|100pts</p>
-            <li className="wd-assignment-list-item">
-            <Link href="/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A1 - ENV + HTML
-            </Link> </li>
-            <p>Multiple Modules|Not available until May 20 at 12am|Due May 27 at 11:59pm|100pts</p>
-        </ul>
+  return (
+    <div id="wd-assignments" className="p-4">
+      {/* Control Buttons */}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="form-control w-50"
+          id="wd-search-assignment"
+        />
+        <div>
+          <Button
+            variant="danger"
+            size="lg"
+            className="me-1 float-end"
+            id="wd-add-assignment"
+          >
+            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+            Assignment
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            className="me-1 float-end"
+            id="wd-add-assignment-group"
+          >
+            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+            Group
+          </Button>
+        </div>
       </div>
-  );}
-  
+
+     
+      <ListGroup className="rounded-0" id="wd-assignment-groups">
+        <ListGroupItem className="wd-assignment-group p-0 mb-5 fs-5 border-gray">
+          <div className="d-flex justify-content-between align-items-center border p-3 bg-light">
+            <div className="d-flex align-items-center">
+              <FaEllipsisV className="me-2 text-secondary" />
+              <h5 className="mb-0 fw-bold">ASSIGNMENTS</h5>
+            </div>
+
+            <div className="d-flex align-items-center">
+              <span
+                className="badge bg-white text-dark border me-3"
+                style={{ borderRadius: "999px", padding: "8px 16px", fontSize: "0.85rem" }}
+              >
+                40% of Total
+              </span>
+              <Button variant="light" className="border me-2">
+                <FaPlus />
+              </Button>
+              <FaEllipsisV className="fs-5 text-secondary" />
+            </div>
+          </div>
+
+          {/* Assignment List */}
+          <ListGroup className="wd-assignments rounded-0">
+            {/* Assignment 1 */}
+            <ListGroupItem className="wd-assignment p-3 ps-2">
+              <BsGripVertical className="me-2 fs-3" />
+             
+                <Link
+                  href="/Courses/1234/Assignments/123"
+                  className="wd-assignment-link fw-bold"
+                >
+                  A1 - ENV + HTML
+                </Link>
+                
+              
+              <LessonControlButtons />
+              <p className="mb-0 text-muted small mt-2">
+                <span className="fw-bold text-danger">Multiple Modules</span> | Not
+                available until May 6 at 12am | Due May 15 at 11:59pm | 100 pts
+              </p>
+            </ListGroupItem>
+
+            {/* Assignment 2 */}
+            <ListGroupItem className="wd-assignment p-3 ps-2">
+              <BsGripVertical className="me-2 fs-3" />
+              
+                <Link
+                  href="/Courses/1234/Assignments/124"
+                  className="wd-assignment-link fw-bold"
+                >
+                  A2 - CSS + BOOTSTRAP
+                </Link>
+              
+              <LessonControlButtons />
+              <p className="mb-0 text-muted small mt-2">
+                <span className="fw-bold text-danger">Multiple Modules</span> | Not
+                available until May 13 at 12am | Due May 20 at 11:59pm | 100 pts
+              </p>
+            </ListGroupItem>
+
+            {/* Assignment 3 */}
+            <ListGroupItem className="wd-assignment p-3 ps-2">
+              <BsGripVertical className="me-2 fs-3" />
+              
+                <Link
+                  href="/Courses/1234/Assignments/125"
+                  className="wd-assignment-link fw-bold"
+                >
+                  A3 - REACT + STATE
+                </Link>
+              
+             
+              <LessonControlButtons />
+              <p className="mb-0 text-muted small mt-2">
+                <span className="fw-bold text-danger">Multiple Modules</span> | Not
+                available until May 20 at 12am | Due May 27 at 11:59pm | 100 pts
+              </p>
+            </ListGroupItem>
+          </ListGroup>
+        </ListGroupItem>
+      </ListGroup>
+    </div>
+  );
+}

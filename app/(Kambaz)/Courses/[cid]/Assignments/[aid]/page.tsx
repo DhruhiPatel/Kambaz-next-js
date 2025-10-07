@@ -1,100 +1,148 @@
+"use client";
+import { Form, Button, Row, Col} from "react-bootstrap";
+import Link from "next/link";
+
 export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">Assignment Name</label><br/><br/>
-        <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of
-        </textarea>
-        <br /><br/>
-        <table>
-          <tr>
-            <td align="left" valign="top">
-              <label htmlFor="wd-points">Points</label>
-              <input id="wd-points" defaultValue={100} />
-            </td>
-        </tr><br/>
-        <tr>
-            <td align="left" valign="top">
-                <label htmlFor="wd-group">Assignment Group</label>
-                <select id="wd-select-one-genre" defaultValue="Assignments">
-            <option value="Assignment1">ASSIGNMENT1</option>
-            <option value="Assignment2">ASSIGNMENT2</option>
-            <option value="Assignments">ASSIGNMENTS</option>
-            <option value="Assignment3">ASSIGNMENT3</option>
-            </select>
-            </td>
-        </tr><br/>
-        <tr>
-            <td align="left" valign="top">
-                <label htmlFor="wd-display-grade-as">Display Grade as</label>
-            <select id="wd-select-one-genre" defaultValue="PERCENTAGE">
-            <option value="PERCENTAGE">Percentage</option>
-            <option value="LETTERS">Letters</option>
-            <option value="GPA">GPA</option>
-            <option value="CREDITS">Credits</option>
-            </select>
-            </td>
-        </tr><br/>
-        <tr>
-            <td align="left" valign="top">
-                <label htmlFor="wd-submission-type">Submission</label>
-            <select id="wd-select-one-genre" defaultValue="ONLINE">
-            <option value="ONLINE">Online</option>
-            <option value="OFFLINE">Offline</option>
-            </select>
-            </td>
-        </tr><br/>
-        <tr>
-           <td align="left" valign="top">
-                <label>Online Entry Options</label><br/>
-            
-            
-            <input type="checkbox" name="check-genre" id="wd-text-entry"/>
-            <label htmlFor="wd-text-entry">Text Entry</label><br/>
+  return (
+    <div id="wd-assignments-editor" className="p-4">
+      <Form>
+       
+        <Form.Group className="mb-4" controlId="wd-name">
+          <Form.Label className="fw-semibold">Assignment Name</Form.Label>
+          <Form.Control type="text" defaultValue="A1" />
+        </Form.Group>
 
-            <input type="checkbox" name="check-genre" id="wd-website-url"/>
-            <label htmlFor="wd-website-url">Website URL</label><br/>
+        
+        <Form.Group className="mb-4" controlId="wd-description">
+          <Form.Label className="fw-semibold">Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={8}
+            defaultValue={`The assignment is available online.
 
-            <input type="checkbox" name="check-genre" id="wd-media-recordings"/>
-            <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
+Submit a link to the landing page of your Web application running on Netlify.
 
-            <input type="checkbox" name="check-genre" id="wd-student-annotation"/>
-            <label htmlFor="wd-student-annonation">Student Annotation</label><br/>
+The landing page should include the following:
+• Your full name and section
+• Links to each of the lab assignments
+• Link to the Kanbas application
+• Links to all relevant source code repositories
 
-            <input type="checkbox" name="check-genre" id="wd-file-upload"/>
-            <label htmlFor="wd-file-upload">File Uploads</label>
-            </td>
-        </tr><br/>
-        <tr>
-            <td align="left" valign="top">
-              <label htmlFor="wd-assign-to">Assign to</label>
-              <input id="wd-assign-to" defaultValue="Everyone" />
-              </td>
-        </tr><br/>
-        <tr>
-        <label htmlFor="wd-due-date"> Due: </label>
-        <input type="date"
-       defaultValue="2024-05-13"
-       id="wd-due-date"/></tr><br/>
-        <tr>
-        <label htmlFor="wd-available-from"> Available from: </label>
-        <input type="date"
-       defaultValue="2024-05-06"
-       id="wd-available-from"/>
+The Kanbas application should include a link to navigate back to the landing page.`}
+          />
+        </Form.Group>
 
-       <label htmlFor="wd-available-until"> Until: </label>
-        <input type="date"
-       defaultValue="2024-05-20"
-       id="wd-available-until"/></tr><br/><br/>
+      
+        <Row className="mb-4">
+  <Col md={3}>
+    <Form.Group controlId="wd-points" className="d-flex align-items-center">
+      <Form.Label className="fw-semibold mb-0 me-2">Points</Form.Label>
+      <Form.Control type="number" defaultValue={100} style={{ width: '300px' }} />
+    </Form.Group>
+  </Col>
+</Row>
+            {/* Assignment Group */}
+       
+        <Row className="mb-4">
+  <Col md={4}>
+    <Form.Group controlId="wd-group" className="d-flex align-items-center">
+      <Form.Label className="fw-semibold mb-0 me-2">Assignment Group</Form.Label>
+      <Form.Select defaultValue="ASSIGNMENTS" style={{ width: '300px' }}>
+        <option>ASSIGNMENT1</option>
+        <option>ASSIGNMENT2</option>
+        <option>ASSIGNMENTS</option>
+        <option>ASSIGNMENT3</option>
+      </Form.Select>
+    </Form.Group>
+  </Col>
+</Row>
 
-<tr>
-  <td align="right">
-    <button type="button">Cancel</button>
-    <button type="submit">Save</button>
-  </td>
-</tr>
+        {/* Grade Display */}
+        <Row className="mb-4">
+  <Col md={4}>
+    <Form.Group controlId="wd-display-grade-as" className="d-flex align-items-center">
+      <Form.Label className="fw-semibold mb-0 me-2">Display Grade as</Form.Label>
+      <Form.Select defaultValue="Percentage" style={{ width: '300px' }}>
+        <option>Percentage</option>
+        <option>Letters</option>
+        <option>GPA</option>
+        <option>Credits</option>
+      </Form.Select>
+    </Form.Group>
+  </Col>
+</Row>
 
-      </table>
+<div className="d-flex align-items-start mb-4">
+<Form.Label className="fw-semibold mb-0 me-2">Submission Type</Form.Label>
+<div className="border p-3 rounded mb-4">
+  {/* Submission Type */}
+  <Form.Group controlId="wd-submission-type" className="d-flex align-items-center mb-3">
+    <Form.Select defaultValue="Online" style={{ width: '300px' }}>
+      <option>Online</option>
+      <option>Offline</option>
+    </Form.Select>
+  </Form.Group>
+
+  {/* Online Entry Options */}
+  <Form.Group controlId="wd-online-entry">
+    <Form.Label className="fw-semibold mb-2" style={{ minWidth: '140px', display: 'inline-block' }}>
+      Online Entry Options
+    </Form.Label>
+    <div className="ms-3">
+      <Form.Check type="checkbox" label="Text Entry" />
+      <Form.Check type="checkbox" label="Website URL" defaultChecked />
+      <Form.Check type="checkbox" label="Media Recordings" />
+      <Form.Check type="checkbox" label="Student Annotation" />
+      <Form.Check type="checkbox" label="File Uploads" />
     </div>
-);}
+  </Form.Group>
+</div>
+</div>
+
+<div className="d-flex align-items-start mb-4">
+    <Form.Label className="fw-semibold mb-0 me-2">Assign</Form.Label>
+        <div className="border p-3 rounded mb-4">
+          
+  {/* Assign To */}
+  <Form.Group className="mb-4" controlId="wd-assign-to">
+    
+    <Form.Control type="text" defaultValue="Everyone" />
+  </Form.Group>
+
+  {/* Dates */}
+  <Row className="mb-0">
+    
+      <Form.Group controlId="wd-due-date">
+        <Form.Label className="fw-semibold">Due</Form.Label>
+        <Form.Control type="date" defaultValue="2024-05-13" />
+      </Form.Group>
+    
+    <Col md={4}>
+      <Form.Group controlId="wd-available-from">
+        <Form.Label className="fw-semibold">Available from</Form.Label>
+        <Form.Control type="date" defaultValue="2024-05-06" style={{ width: '180px' }}  />
+      </Form.Group>
+    </Col>
+    <Col md={4}>
+      <Form.Group controlId="wd-available-until">
+        <Form.Label className="fw-semibold">Until</Form.Label>
+        <Form.Control type="date" defaultValue="2024-05-20" style={{ width: '180px' }} />
+      </Form.Group>
+    </Col>
+  </Row>
+</div>
+</div>
+
+       
+        <div className="text-end mt-4">
+          <Button variant="secondary" className="me-2 px-4">
+            Cancel
+          </Button>
+          <Button variant="danger" className="px-4">
+            Save
+          </Button>
+        </div>
+      </Form>
+    </div>
+  );
+}

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { FaAlignJustify } from "react-icons/fa6";
 import CourseNavigation from "./Navigation";
 export default async function CoursesLayout({
     children,
@@ -12,18 +13,19 @@ export default async function CoursesLayout({
    
     return (
       <div id="wd-courses">
-        <h2>Course {cid}</h2>
-        <hr />
-        <table>
-          <tbody>
-            <tr>
-              <td valign="top" width="200">
+        <h2 className="text-danger">
+      <FaAlignJustify className="me-4 fs-4 mb-1" />
+      Course {cid} </h2> <hr />
+        <div className="d-flex">
+    <div className="d-none d-md-block">
+
                 <CourseNavigation cid={cid} />
-              </td>
-              <td valign="top" width="100%">{children}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                </div>
+    <div className="flex-fill">
+
+              {children}
+              </div>
+              </div>
+              </div>
     );
   }
