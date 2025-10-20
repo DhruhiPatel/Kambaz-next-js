@@ -8,7 +8,6 @@ export default async function CoursesLayout({
     params,
   }: {
     children: ReactNode;
-    // typed-routes makes `params` a Promise — type it that way and await it
     params: Promise<{ cid: string }>;
   }) {
     const { cid } = await params;

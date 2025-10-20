@@ -1,6 +1,6 @@
-import { ListGroup } from "react-bootstrap";
 import TodoItem from "./TodoItem";
 import todos from "./todos.json";
+import { ListGroup } from "react-bootstrap";
 export default function TodoList() {
  return(
    <>
@@ -11,4 +11,5 @@ export default function TodoList() {
      </ListGroup><hr/>
    </>
 );}
+
 

@@ -1,11 +1,15 @@
-"use client"
-import { useParams } from "next/navigation";
+"use client";
+
 export default function AddPathParameters() {
-  const { a, b } = useParams();
+  const a = 3;
+  const b = 4;
+
   return (
-    <div id="wd-add"> <h4>Add Path Parameters</h4>
-      {3} + {4} = {parseInt(3 as string) + parseInt(4 as string)}
+    <div id="wd-add">
+      <h4>Add Path Parameters</h4>
+      {a} + {b} = {a + b}
     </div>
   );
 }
+
 
