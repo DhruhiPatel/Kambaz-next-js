@@ -1,11 +1,92 @@
 [
-  { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101" },
-  { "_id": "A102", "title": "Combustion Analysis", "course": "RS101" },
-  { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101" },
-  { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102" },
-  { "_id": "A202", "title": "Flow Analysis", "course": "RS102" },
-  { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
-  { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
-  { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
-  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
+  {
+    "_id": "A101",
+    "title": "Propulsion Assignment",
+    "course": "RS101",
+    "description": "This assignment covers the fundamentals of rocket propulsion, including engine types and fuel chemistry.",
+    "points": 100,
+    "dueDate": "2023-05-15",
+    "availableFrom": "2023-05-06",
+    "availableUntil": "2023-05-15"
+  },
+  {
+    "_id": "A102",
+    "title": "Combustion Analysis",
+    "course": "RS101",
+    "description": "Analyze the combustion process of rocket fuels and calculate efficiencies.",
+    "points": 100,
+    "dueDate": "2023-05-20",
+    "availableFrom": "2023-05-13",
+    "availableUntil": "2023-05-20"
+  },
+  {
+    "_id": "A103",
+    "title": "Nozzle Design Project",
+    "course": "RS101",
+    "description": "Design and simulate a rocket nozzle to optimize thrust and efficiency.",
+    "points": 100,
+    "dueDate": "2023-05-27",
+    "availableFrom": "2023-05-20",
+    "availableUntil": "2023-05-27"
+  },
+  {
+    "_id": "A201",
+    "title": "Aerodynamics Quiz",
+    "course": "RS102",
+    "description": "Test your knowledge of airflow, lift, drag, and airfoil design principles.",
+    "points": 50,
+    "dueDate": "2023-05-15",
+    "availableFrom": "2023-05-06",
+    "availableUntil": "2023-05-15"
+  },
+  {
+    "_id": "A202",
+    "title": "Flow Analysis",
+    "course": "RS102",
+    "description": "Analyze different flow scenarios using theoretical and simulation techniques.",
+    "points": 75,
+    "dueDate": "2023-05-20",
+    "availableFrom": "2023-05-13",
+    "availableUntil": "2023-05-20"
+  },
+  {
+    "_id": "A203",
+    "title": "Heating Analysis",
+    "course": "RS102",
+    "description": "Study heat transfer in aerodynamic systems and calculate temperature distributions.",
+    "points": 75,
+    "dueDate": "2023-05-27",
+    "availableFrom": "2023-05-20",
+    "availableUntil": "2023-05-27"
+  },
+  {
+    "_id": "A301",
+    "title": "Structural Design Task",
+    "course": "RS103",
+    "description": "Design spacecraft structural elements and verify stability under loads.",
+    "points": 100,
+    "dueDate": "2023-05-15",
+    "availableFrom": "2023-05-06",
+    "availableUntil": "2023-05-15"
+  },
+  {
+    "_id": "A302",
+    "title": "Orbital Calculations",
+    "course": "RS103",
+    "description": "Calculate orbital trajectories and maneuvers for spacecraft.",
+    "points": 100,
+    "dueDate": "2023-05-20",
+    "availableFrom": "2023-05-13",
+    "availableUntil": "2023-05-20"
+  },
+  {
+    "_id": "A303",
+    "title": "Systems Engineering Exam",
+    "course": "RS103",
+    "description": "Comprehensive assessment of spacecraft systems engineering concepts.",
+    "points": 100,
+    "dueDate": "2023-05-27",
+    "availableFrom": "2023-05-20",
+    "availableUntil": "2023-05-27"
+  }
 ]

@@ -1,11 +1,20 @@
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { BsGripVertical } from "react-icons/bs";
+"use client"; // must be first line
+
 import Link from "next/link";
-import { Button } from "react-bootstrap";
+import { useParams } from "next/navigation";
+import { ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
 import { FaPlus, FaEllipsisV } from "react-icons/fa";
 import LessonControlButtons from "./LessonControlButtons";
+import assignmentsData from "../../../Database/assignments.json"; 
 
 export default function Assignments() {
+  const params = useParams();
+  const courseId = params.cid;
+
+  // Filter assignments for this course
+  const assignments = assignmentsData.filter(a => a.course === courseId);
+
   return (
     <div id="wd-assignments" className="p-4">
       {/* Control Buttons */}
@@ -38,7 +47,6 @@ export default function Assignments() {
         </div>
       </div>
 
-     
       <ListGroup className="rounded-0" id="wd-assignment-groups">
         <ListGroupItem className="wd-assignment-group p-0 mb-5 fs-5 border-gray">
           <div className="d-flex justify-content-between align-items-center border p-3 bg-light">
@@ -52,7 +60,7 @@ export default function Assignments() {
                 className="badge bg-white text-dark border me-3"
                 style={{ borderRadius: "999px", padding: "8px 16px", fontSize: "0.85rem" }}
               >
-                40% of Total
+                {assignments.length} Assignment{assignments.length !== 1 ? "s" : ""} Total
               </span>
               <Button variant="light" className="border me-2">
                 <FaPlus />
@@ -63,61 +71,26 @@ export default function Assignments() {
 
           {/* Assignment List */}
           <ListGroup className="wd-assignments rounded-0">
-            {/* Assignment 1 */}
-            <ListGroupItem className="wd-assignment p-3 ps-2">
-              <BsGripVertical className="me-2 fs-3" />
-             
+            {assignments.map(assignment => (
+              <ListGroupItem key={assignment._id} className="wd-assignment p-3 ps-2">
+                <BsGripVertical className="me-2 fs-3" />
                 <Link
-                  href="/Courses/1234/Assignments/123"
+                  href={`/Courses/${courseId}/Assignments/${assignment._id}`}
                   className="wd-assignment-link fw-bold"
                 >
-                  A1 - ENV + HTML
+                  {assignment.title}
                 </Link>
-                
-              
-              <LessonControlButtons />
-              <p className="mb-0 text-muted small mt-2">
-                <span className="fw-bold text-danger">Multiple Modules</span> | Not
-                available until May 6 at 12am | Due May 15 at 11:59pm | 100 pts
-              </p>
-            </ListGroupItem>
+                <LessonControlButtons />
+                <p className="mb-0 text-muted small mt-2">
+                  <span className="fw-bold text-danger">Multiple Modules</span> | Not
+                  available yet | Due TBD | 100 pts
+                </p>
+              </ListGroupItem>
+            ))}
 
-            {/* Assignment 2 */}
-            <ListGroupItem className="wd-assignment p-3 ps-2">
-              <BsGripVertical className="me-2 fs-3" />
-              
-                <Link
-                  href="/Courses/1234/Assignments/124"
-                  className="wd-assignment-link fw-bold"
-                >
-                  A2 - CSS + BOOTSTRAP
-                </Link>
-              
-              <LessonControlButtons />
-              <p className="mb-0 text-muted small mt-2">
-                <span className="fw-bold text-danger">Multiple Modules</span> | Not
-                available until May 13 at 12am | Due May 20 at 11:59pm | 100 pts
-              </p>
-            </ListGroupItem>
-
-            {/* Assignment 3 */}
-            <ListGroupItem className="wd-assignment p-3 ps-2">
-              <BsGripVertical className="me-2 fs-3" />
-              
-                <Link
-                  href="/Courses/1234/Assignments/125"
-                  className="wd-assignment-link fw-bold"
-                >
-                  A3 - REACT + STATE
-                </Link>
-              
-             
-              <LessonControlButtons />
-              <p className="mb-0 text-muted small mt-2">
-                <span className="fw-bold text-danger">Multiple Modules</span> | Not
-                available until May 20 at 12am | Due May 27 at 11:59pm | 100 pts
-              </p>
-            </ListGroupItem>
+            {assignments.length === 0 && (
+              <p className="text-muted mt-3 ps-3">No assignments found for this course.</p>
+            )}
           </ListGroup>
         </ListGroupItem>
       </ListGroup>
