@@ -7,4 +7,3 @@ export default function AccountNavigation() {
      <Link href="Profile"> Profile </Link> <br />
    </div>
 );}
-97
