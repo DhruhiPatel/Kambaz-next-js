@@ -116,7 +116,7 @@ export default function Dashboard() {
         </pre> */}
       {/* 🔹 Dashboard Header */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 id="wd-dashboard-title">Dashboard '{currentUser.username}'</h1>
+        <h1 id="wd-dashboard-title">Dashboard</h1>
         <Button
           variant="primary"
           id="wd-enrollments-toggle"

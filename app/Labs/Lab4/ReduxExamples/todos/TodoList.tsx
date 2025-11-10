@@ -4,7 +4,7 @@ import TodoItem from "./TodoItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ListGroup } from "react-bootstrap";
-type Todo = {
+export type Todo = {
   id: string | number;
   title: string;
   completed?: boolean;
