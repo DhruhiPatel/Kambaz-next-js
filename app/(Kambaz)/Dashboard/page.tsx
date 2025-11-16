@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import * as client from "../Courses/client";
 import {
   Row,
   Col,
@@ -19,6 +20,7 @@ import {
   addNewCourse,
   deleteCourse,
   updateCourse,
+  setCourses,
 } from "../Courses/reducer";
 import { enrollCourse, unenrollCourse } from "../Account/reducer";
 import { RootState } from "../store";
@@ -65,6 +67,32 @@ export default function Dashboard() {
     img: "/images/reactjs.jpg",
     description: "New Description",
   });
+   const onAddNewCourse = async () => {
+    const newCourse = await client.createCourse(course);
+    dispatch(setCourses([ ...courses, newCourse ]));
+  };
+   const onDeleteCourse = async (courseId: string) => {
+    const status = await client.deleteCourse(courseId);
+    dispatch(setCourses(courses.filter((course) => course._id !== courseId)));
+  };
+   const onUpdateCourse = async () => {
+    await client.updateCourse(course);
+    dispatch(setCourses(courses.map((c) => {
+        if (c._id === course._id) { return course; }
+        else { return c; }
+    })));};
+   const fetchCourses = async () => {
+    try {
+      const courses = await client.findMyCourses();
+      dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCourses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   if (!currentUser) return null;
   const isFaculty = currentUser.role === "FACULTY";
@@ -136,7 +164,7 @@ export default function Dashboard() {
               className="float-end"
               variant="primary"
               id="wd-add-new-course-click"
-              onClick={handleAddCourse}
+              onClick={onAddNewCourse}
             >
               Add
             </Button>
@@ -144,7 +172,7 @@ export default function Dashboard() {
               className="float-end me-2"
               variant="warning"
               id="wd-update-course-click"
-              onClick={() => dispatch(updateCourse(course))}
+               onClick={onUpdateCourse}
             >
               Update
             </Button>
@@ -251,7 +279,9 @@ export default function Dashboard() {
                           id="wd-delete-course-click"
                           variant="danger"
                           size="sm"
-                          onClick={() => dispatch(deleteCourse(c._id))}
+                          onClick={(event) => { event.preventDefault();
+              onDeleteCourse(course._id);
+                          }}
                         >
                           Delete
                         </Button>
