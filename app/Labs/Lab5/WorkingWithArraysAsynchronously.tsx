@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaPlusCircle } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";

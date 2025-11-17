@@ -280,7 +280,7 @@ export default function Dashboard() {
                           variant="danger"
                           size="sm"
                           onClick={(event) => { event.preventDefault();
-              onDeleteCourse(course._id);
+              onDeleteCourse(c._id);
                           }}
                         >
                           Delete
