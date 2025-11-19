@@ -28,9 +28,9 @@ export const updateUser = async (user: any) => {
 */}
 
 
- import axios from "axios";
+import axios from "axios";
  
-// Basic types so ESLint stops complaining
+
 export interface Credentials {
   email: string;
   password: string;
@@ -38,7 +38,7 @@ export interface Credentials {
  
 export interface User {
   _id?: string;
-  email: string;
+  email?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
