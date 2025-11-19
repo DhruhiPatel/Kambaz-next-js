@@ -32,8 +32,9 @@ import axios from "axios";
  
 
 export interface Credentials {
-  email: string;
+  email?: string;
   password: string;
+  username?: string;
 }
  
 export interface User {
