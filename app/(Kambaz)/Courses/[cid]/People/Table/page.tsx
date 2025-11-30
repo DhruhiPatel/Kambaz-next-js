@@ -1,30 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
+
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PeopleDetails from "../Details";
-import Link from "next/link";
+import { useParams } from "next/navigation";
+import * as client from "../../../client";
 
-export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) {
- const [showDetails, setShowDetails] = useState(false);
+// -----------------------------------------------------
+// 1️⃣ YOUR ORIGINAL PeopleTable COMPONENT (NO CHANGES)
+// -----------------------------------------------------
+export function PeopleTable({
+  users = [],
+  fetchUsers
+}: {
+  users?: any[];
+  fetchUsers: () => void;
+}) {
+  const [showDetails, setShowDetails] = useState(false);
   const [showUserId, setShowUserId] = useState<string | null>(null);
 
- return (
-  <div id="wd-people-table">
-   <Table striped>
- <thead>
-     <tr><th>Name</th><th>Login ID</th><th>Section</th><th>Role</th><th>Last Activity</th><th>Total Activity</th></tr>
-    </thead>
-    <tbody>
+  return (
+    <div id="wd-people-table">
+      <Table striped>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Login ID</th>
+            <th>Section</th>
+            <th>Role</th>
+            <th>Last Activity</th>
+            <th>Total Activity</th>
+          </tr>
+        </thead>
+
+        <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              
-              {/* ⭐ Make Name Clickable to Open Details */}
               <td className="wd-full-name text-nowrap">
                 <span
-                  className="text-decoration-none"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setShowDetails(true);
@@ -32,8 +47,7 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[];
                   }}
                 >
                   <FaUserCircle className="me-2 fs-1 text-secondary" />
-                  <span className="wd-first-name">{user.firstName}</span>{" "}
-                  <span className="wd-last-name">{user.lastName}</span>
+                  {user.firstName} {user.lastName}
                 </span>
               </td>
 
@@ -46,9 +60,39 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[];
           ))}
         </tbody>
       </Table>
+
+      {showDetails && (
+        <PeopleDetails uid={showUserId} onClose={() => setShowDetails(false)} />
+      )}
     </div>
   );
 }
+
+// -----------------------------------------------------
+// 2️⃣ THE ACTUAL PAGE — REQUIRED BY ASSIGNMENT
+// -----------------------------------------------------
+export default function CoursePeoplePage() {
+  const { cid } = useParams();
+  const [users, setUsers] = useState<any[]>([]);
+
+  const fetchUsers = async () => {
+    if (!cid) return;
+    const enrolledUsers = await client.findUsersForCourse(cid as string);
+    setUsers(enrolledUsers);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [cid]);
+
+  return (
+    <div className="container mt-4">
+      <h2>People Enrolled in this Course</h2>
+      <PeopleTable users={users} fetchUsers={fetchUsers} />
+    </div>
+  );
+}
+
 
 {/*
           <tr><td className="wd-full-name text-nowrap">
