@@ -139,9 +139,6 @@ export default function Dashboard() {
 
   return (
     <div id="wd-dashboard" className="p-4">
-      {/* <pre>
-        {JSON.stringify(courses)}
-        </pre> */}
       {/* 🔹 Dashboard Header */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1 id="wd-dashboard-title">Dashboard</h1>
@@ -206,7 +203,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
         <Row xs={1} sm={2} md={3} lg={4} className="gy-4 gx-4 my-4">
           {visibleCourses.map((c: Courses) => {
-            const isEnrolled = enrolledIds.includes(c._id);
+            const isEnrolled = true;//enrolledIds.includes(c._id);
             return (
               <Col
                 key={c._id}

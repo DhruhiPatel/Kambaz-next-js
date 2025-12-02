@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import PeopleTable from "../../Courses/[cid]/People/Table/page";
+import {PeopleTable} from "../../Courses/[cid]/People/Table/page";
 import * as client from "../client";
 import { FormControl } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
@@ -66,5 +66,7 @@ export default function Users() {
              className="float-start w-25 me-2 wd-filter-by-name" />
 
      <PeopleTable users={users} fetchUsers={fetchUsers} />
+ 
+     
    </div>
 );}

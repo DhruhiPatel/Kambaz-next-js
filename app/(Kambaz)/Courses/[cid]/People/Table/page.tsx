@@ -68,30 +68,6 @@ export function PeopleTable({
   );
 }
 
-// -----------------------------------------------------
-// 2️⃣ THE ACTUAL PAGE — REQUIRED BY ASSIGNMENT
-// -----------------------------------------------------
-export default function CoursePeoplePage() {
-  const { cid } = useParams();
-  const [users, setUsers] = useState<any[]>([]);
-
-  const fetchUsers = async () => {
-    if (!cid) return;
-    const enrolledUsers = await client.findUsersForCourse(cid as string);
-    setUsers(enrolledUsers);
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, [cid]);
-
-  return (
-    <div className="container mt-4">
-      <h2>People Enrolled in this Course</h2>
-      <PeopleTable users={users} fetchUsers={fetchUsers} />
-    </div>
-  );
-}
 
 
 {/*

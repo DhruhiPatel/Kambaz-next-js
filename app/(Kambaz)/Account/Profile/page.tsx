@@ -51,6 +51,8 @@ export default function Profile() {
               setProfile({ ...profile, username: e.target.value })
             }
           />
+
+          {profile.role}
  
           <FormControl
             id="wd-password"
