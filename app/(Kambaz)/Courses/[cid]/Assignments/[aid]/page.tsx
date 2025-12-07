@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Row, Col, Card, Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { RootState } from "../../../../store";
-import { addAssignment, updateAssignment } from "../reducer";
-import * as db from "../../../../Database";
+import {
+  setAssignments,
+} from "../reducer";
+import * as client from "../client";
 
 type Assignment = {
   _id: string;
@@ -56,11 +58,22 @@ export default function AssignmentEditor() {
   const isFaculty = currentUser?.role === "FACULTY";
   const editing = aid !== "new";
 
-  // find existing or fallback
-  const existing =
-    assignments.find((a: any) => a._id === aid && a.course === cid) ??
-    (db.assignments as any[]).find((a) => a._id === aid && a.course === cid);
+  // Load assignment from Redux (first choice)
+  const existing = assignments.find((a) => a._id === aid) ?? null;
 
+  // Load from server if editing and nothing in Redux
+  useEffect(() => {
+    const loadFromServer = async () => {
+      if (editing && !existing) {
+        const fetched = await client.findAssignmentById(aid);
+        dispatch(setAssignments([...assignments, fetched]));
+      }
+    };
+    loadFromServer();
+  }, [aid, editing, existing]);
+
+
+  // Build initial data
   const initial: Assignment = useMemo(() => {
     if (editing && existing) {
       return {
@@ -75,7 +88,7 @@ export default function AssignmentEditor() {
       };
     }
 
-    // default for new
+    // default NEW assignment
     return {
       _id: uuidv4(),
       course: String(cid),
@@ -105,15 +118,32 @@ export default function AssignmentEditor() {
       setForm((f) => ({ ...f, [name]: val as any }));
     };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (!isFaculty) return;
+
     const payload = { ...form, course: String(cid) };
-    if (editing) dispatch(updateAssignment(payload));
-    else dispatch(addAssignment(payload));
+
+    if (editing) {
+      // UPDATE on server
+      const updated = await client.updateAssignment(payload);
+      dispatch(
+        setAssignments(
+          assignments.map((a) =>
+            a._id === updated._id ? updated : a
+          )
+        )
+      );
+    } else {
+      // CREATE on server
+      const created = await client.createAssignmentForCourse(cid, payload);
+      dispatch(setAssignments([...assignments, created]));
+    }
+
     router.push(`/Courses/${cid}/Assignments`);
   };
 
-  const onCancel = () => router.push(`/Courses/${cid}/Assignments`);
+  const onCancel = () =>
+    router.push(`/Courses/${cid}/Assignments`);
 
   const ro = !isFaculty;
 
@@ -139,6 +169,7 @@ export default function AssignmentEditor() {
           />
         </Form.Group>
 
+        {/* ⭐ KEEP YOUR ORIGINAL UI EXACTLY AS IS */}
         <Form.Group as={Row} className="mb-3 align-items-center">
           <Form.Label column sm={3} className="fw-semibold">
             Points

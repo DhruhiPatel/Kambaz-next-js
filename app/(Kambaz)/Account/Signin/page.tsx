@@ -9,7 +9,7 @@ import { FormControl, Button } from "react-bootstrap";
 import type { User } from "../reducer";
  
 type Credentials = { username: string; password: string };
- 
+import * as client from "../client";
 export default function Signin() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -18,12 +18,8 @@ export default function Signin() {
     password: "",
   });
  
-  const signin = () => {
-    const user = (db.users as User[]).find(
-      (u) =>
-        u.username === credentials.username &&
-        u.password === credentials.password
-    );
+  const signin =  async () => {
+    const user = await client.signin(credentials);
     if (!user) {
       // optional: show an error toast/message here
       return;

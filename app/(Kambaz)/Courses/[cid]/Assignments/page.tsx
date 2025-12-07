@@ -2,26 +2,48 @@
 
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { ListGroup, ListGroupItem, Button, Modal, Form } from "react-bootstrap";
+import {
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import { BsGripVertical, BsTrash } from "react-icons/bs";
 import { FaPlus, FaEllipsisV, FaSearch } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { setAssignments, deleteAssignment as deleteAssignmentLocal } from "./reducer";
+import * as client from "./client";
+import { useEffect, useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentsReducer
+  );
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer
+  );
 
   const [search, setSearch] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const isFaculty = currentUser?.role === "FACULTY";
+
+  // FETCH assignments on load
+  const fetchAssignments = async () => {
+    const data = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(data));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
 
   const filteredAssignments = assignments.filter(
     (a) =>
@@ -34,8 +56,14 @@ export default function Assignments() {
     setShowConfirm(true);
   };
 
-  const confirmDelete = () => {
-    if (selectedId) dispatch(deleteAssignment(selectedId));
+  const confirmDelete = async () => {
+    if (!selectedId) return;
+
+    await client.deleteAssignment(selectedId);
+    dispatch(
+      setAssignments(assignments.filter((a) => a._id !== selectedId))
+    );
+
     setShowConfirm(false);
     setSelectedId(null);
   };
@@ -65,7 +93,9 @@ export default function Assignments() {
               variant="danger"
               size="lg"
               id="wd-add-assignment"
-              onClick={() => router.push(`/Courses/${cid}/Assignments/new`)}
+              onClick={() =>
+                router.push(`/Courses/${cid}/Assignments/new`)
+              }
             >
               <FaPlus className="me-2" />
               Assignment
@@ -115,9 +145,11 @@ export default function Assignments() {
                     {a.title}
                   </Link>
                   <p className="mb-0 text-muted small mt-1">
-                    Due {new Date(a.due).toLocaleString()} | {a.points ?? 100} pts
+                    Due {new Date(a.due).toLocaleString()} |{" "}
+                    {a.points ?? 100} pts
                   </p>
                 </div>
+
                 {isFaculty && (
                   <Button
                     variant="outline-danger"
@@ -138,8 +170,12 @@ export default function Assignments() {
         </ListGroupItem>
       </ListGroup>
 
-      {/* Delete confirmation dialog */}
-      <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
+      {/* Delete Confirmation Dialog */}
+      <Modal
+        show={showConfirm}
+        onHide={() => setShowConfirm(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Delete Assignment</Modal.Title>
         </Modal.Header>
@@ -147,7 +183,10 @@ export default function Assignments() {
           Are you sure you want to delete this assignment?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConfirm(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirm(false)}
+          >
             Cancel
           </Button>
           <Button variant="danger" onClick={confirmDelete}>
