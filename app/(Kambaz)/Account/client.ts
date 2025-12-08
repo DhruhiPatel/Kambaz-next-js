@@ -1,4 +1,4 @@
-{/*import axios from "axios";
+import axios from "axios";
 const axiosWithCredentials = axios.create({ withCredentials: true });
 export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 export const USERS_API = `${HTTP_SERVER}/api/users`;
@@ -25,10 +25,10 @@ export const updateUser = async (user: any) => {
   const response = await axiosWithCredentials.put(`${USERS_API}/${user._id}`, user);
   return response.data;
 };
-*/}
 
 
-import axios from "axios";
+
+{/*import axios from "axios";
  
 
 export interface Credentials {
@@ -83,3 +83,4 @@ export const updateUser = async (user: User) => {
   );
   return response.data;
 };
+*/}

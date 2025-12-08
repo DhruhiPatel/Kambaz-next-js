@@ -14,15 +14,16 @@ export default function Profile() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.accountReducer);
  
-  const [profile, setProfile] = useState<User | null>(null);
- 
+  //const [profile, setProfile] = useState<User | null>(null);
+ const [profile, setProfile] = useState<any>({});
+
   const fetchProfile = () => {
     if (!currentUser) return redirect("/Account/Signin");
     setProfile(currentUser);
   };
  
   const updateProfile = async () => {
-    if (!profile) return;                     // Fix for User | null error
+    //if (!profile) return;                     // Fix for User | null error
     const updatedProfile = await client.updateUser(profile);
     dispatch(setCurrentUser(updatedProfile));
   };

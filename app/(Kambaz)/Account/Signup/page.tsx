@@ -32,7 +32,7 @@ export default function Signup() {
 
     dispatch(setCurrentUser(currentUser));
 
-    redirect("/Profile");
+    redirect("/Account/Profile");
 
   };
  

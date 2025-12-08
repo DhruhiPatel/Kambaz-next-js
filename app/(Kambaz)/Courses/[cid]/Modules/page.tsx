@@ -8,6 +8,7 @@ import ModulesControlButtons from "./ModulesControlButtons";
 import { useState, useEffect } from "react";
 import { FormControl } from "react-bootstrap";
 import { useParams } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import { setModules, addModule, editModule, updateModule, deleteModule }
   from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +18,11 @@ import * as client from "../../client";
 export default function Modules() {
    const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
+   const addModule = () => {
+    setModules([ ...modules, { _id: uuidv4(), name: moduleName, course: cid, lessons: [] } ]);
+    setModuleName("");
+  };
+
    const { modules } = useSelector((state: RootState) => state.modulesReducer);
     const dispatch = useDispatch();
      const onUpdateModule = async (module: any) => {
